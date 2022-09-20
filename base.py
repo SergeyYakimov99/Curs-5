@@ -1,8 +1,10 @@
+from typing import Optional
+
 from unit import BaseUnit
 
 
 class BaseSingleton(type):
-    _instances = {}
+    _instances: dict = {}
 
     def __call__(cls, *args, **kwargs):
         if cls not in cls._instances:
@@ -18,13 +20,13 @@ class Arena(metaclass=BaseSingleton):
     game_is_running = False
     battle_result = "Бой не закончен"
 
-    def start_game(self, player: BaseUnit, enemy: BaseUnit):
+    def start_game(self, player: BaseUnit, enemy: BaseUnit) -> None:
         # TODO НАЧАЛО ИГРЫ
         self.player = player
         self.enemy = enemy
         self.game_is_running = True
 
-    def _check_players_hp(self):
+    def _check_players_hp(self) -> Optional[str]:
         """
         ПРОВЕРКА ЗДОРОВЬЯ ИГРОКА И ВРАГА
         """
@@ -38,17 +40,17 @@ class Arena(metaclass=BaseSingleton):
             self.battle_result = "Вы проиграли"
             return self._end_game()
 
-    def _stamina_regeneration(self):
+    def _stamina_regeneration(self) -> None:
         """
         регенерация здоровья и стамины для игрока и врага за ход
         """
         self.player.add_stamina(self.STAMINA_PER_ROUND)
         self.enemy.add_stamina(self.STAMINA_PER_ROUND)
 
-    def next_turn(self):
+    def next_turn(self) -> str:
         """
         СЛЕДУЮЩИЙ ХОД
-        срабатывает когда игроп пропускает ход или когда игрок наносит удар.
+        срабатывает когда игрок пропускает ход или когда игрок наносит удар.
         """
         result = self._check_players_hp()
         if result:
@@ -56,7 +58,7 @@ class Arena(metaclass=BaseSingleton):
         self._stamina_regeneration()
         return self.enemy.hit(self.player)
 
-    def _end_game(self):
+    def _end_game(self) -> str:
         """
         КНОПКА ЗАВЕРШЕНИЕ ИГРЫ
         """
@@ -64,15 +66,14 @@ class Arena(metaclass=BaseSingleton):
         self.game_is_running = False
         return self.battle_result
 
-    def player_hit(self):
+    def player_hit(self) -> str:
         """
         КНОПКА УДАР ИГРОКА
         """
-        result = self.player.hit(self.enemy)
-        self.next_turn()
+        result = f"{self.player.hit(self.enemy)} {self.next_turn()}"
         return result
 
-    def player_use_skill(self):
+    def player_use_skill(self) -> str:
         """
         КНОПКА: ИГРОК ИСПОЛЬЗУЕТ УМЕНИЕ
         """

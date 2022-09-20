@@ -17,21 +17,26 @@ arena = Arena()
 
 @app.route("/")
 def main_page():
-    # TODO рендерим главное меню
+    """
+    рендерим главное меню
+    """
     return render_template("index.html", heroes=heroes)
 
 
 @app.route("/fight/")
 def start_fight():
-    # TODO выполняем функцию start_game экземпляра класса арена и передаем ему необходимые аргументы
-    # TODO рендерим экран боя
+    """
+    выполняем функцию start_game экземпляра класса арена и передаем ему необходимые аргументы
+    """
     arena.start_game(player=heroes['player'], enemy=heroes['enemy'])
     return render_template("fight.html", heroes=heroes, result="Начало боя")
 
 
 @app.route("/fight/hit/")
 def hit():
-    # TODO кнопка нанесения удара
+    """
+    кнопка нанесения удара
+    """
     if arena.game_is_running:
         result = arena.player_hit()
         return render_template('fight.html', heroes=heroes, result=result)
@@ -41,7 +46,9 @@ def hit():
 
 @app.route("/fight/use-skill/")
 def use_skill():
-    # TODO кнопка использования скилла
+    """
+    кнопка использования скилла
+    """
     if arena.game_is_running:
         result = arena.player_use_skill()
         return render_template("fight.html", heroes=heroes, result=result)
@@ -51,7 +58,9 @@ def use_skill():
 
 @app.route("/fight/pass-turn/")
 def pass_turn():
-    # TODO кнопка пропус хода
+    """
+    кнопка пропус хода
+    """
     if arena.game_is_running:
         result = arena.next_turn()
         return render_template("fight.html", heroes=heroes, result=result)
@@ -61,16 +70,18 @@ def pass_turn():
 
 @app.route("/fight/end-fight/")
 def end_fight():
-    # TODO кнопка завершить игру - переход в главное меню
+    """
+    кнопка завершить игру - переход в главное меню
+    """
     arena._end_game()
     return render_template("index.html", heroes=heroes)
 
 
 @app.route("/choose-hero/", methods=['post', 'get'])
 def choose_hero():
-    # TODO кнопка выбор героя. 2 метода GET и POST
-    # TODO на GET отрисовываем форму.
-    # TODO на POST отправляем форму и делаем редирект на эндпоинт choose enemy
+    """
+    кнопка выбор героя. 2 метода GET и POST
+    """
     if request.method == 'GET':
         header = 'Выбор героя'
         equipment = Equipment()
@@ -93,7 +104,9 @@ def choose_hero():
 
 @app.route("/choose-enemy/", methods=['post', 'get'])
 def choose_enemy():
-    # TODO кнопка выбор соперникa.
+    """
+    кнопка выбор соперникa.
+    """
 
     if request.method == 'GET':
         header = 'Выбор противника'

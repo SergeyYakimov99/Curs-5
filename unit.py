@@ -45,7 +45,7 @@ class BaseUnit(ABC):
         self.armor = armor
         return f"{self.name} экипирован броней {self.armor.name}"
 
-    def _count_damage(self, target: BaseUnit) -> int:
+    def _count_damage(self, target: BaseUnit) -> float:
         """
          логика расчета урона игрока, логика расчета брони цели
          уменьшение выносливости атакующего при ударе
@@ -83,7 +83,7 @@ class BaseUnit(ABC):
             if damage > 0:
                 return f"{self.name} используя {self.weapon.name} пробивает {target.armor.name} соперника и наносит {damage} урона."
             else:
-                return f"{self.name} используя {self.weapon.name} наносит удар, но {target.armor.name} cоперника его останавливает."
+                return f"{self.name} используя {self.weapon.name} наносит удар, но {target.armor.name} cоперник его останавливает."
         else:
             return f"{self.name} попытался использовать {self.weapon.name}, но у него не хватило выносливости."
 
@@ -98,7 +98,7 @@ class BaseUnit(ABC):
                 self._is_skill_used = True
             return self.unit_class.skill.use(user=self, target=target)
 
-    def add_stamina(self, stamina_point):
+    def add_stamina(self, stamina_point: float):
         stamina_growth = stamina_point * self.unit_class.stamina
         if self.stamina + stamina_growth > self.unit_class.max_stamina:
             self.stamina = self.unit_class.max_stamina

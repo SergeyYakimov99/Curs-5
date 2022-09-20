@@ -23,7 +23,7 @@ class Weapon:
     stamina_per_hit: float
 
     @property
-    def damage(self):
+    def damage(self) -> float:
         return round(uniform(self.min_damage, self.max_damage), 1)
 
 
@@ -68,7 +68,7 @@ class Equipment:
     @staticmethod
     def _get_equipment_data() -> EquipmentData:
         """
-        этот метод загружает json в переменную EquipmentData
+        этот метод загружает данные из json в EquipmentData
         """
         with open("./data/equipment.json", encoding='utf-8') as equipment_file:
             data = json.load(equipment_file)

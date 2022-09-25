@@ -3,7 +3,7 @@ version: '3.8'
 services:
 
   app:
-    image: sergeyyakimov99/curs-5
+    image: sgyakimov/curs-5:version-1
     command: gunicorn --bind 0.0.0.0:5000 wsgi:app
     restart: always
 
